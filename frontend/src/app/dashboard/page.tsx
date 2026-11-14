@@ -13,7 +13,7 @@ import { QuarantineTable, QuarantinedIP } from "@/components/quarantine-table";
 import { toast } from "sonner";
 import { ShieldCheck, Radio, ShieldAlert, Lock, ArrowLeft } from "lucide-react";
 
-const API_BASE = "http://127.0.0.1:8000/api/soc";
+const API_BASE = process.env.NEXT_PUBLIC_API_BASE || "http://127.0.0.1:8000/api/soc";
 
 export default function SOCDashboard() {
   const [telemetry, setTelemetry] = useState<any>(null);
@@ -143,19 +143,19 @@ export default function SOCDashboard() {
     <main className="min-h-screen bg-zinc-950 text-zinc-100 flex flex-col selection:bg-zinc-800 font-sans">
       {/* 1. Sticky Enterprise Navbar - Identical to Homepage */}
       <header className="sticky top-0 z-50 w-full border-b border-zinc-800/80 bg-zinc-950/80 backdrop-blur">
-        <div className="max-w-6xl mx-auto px-4 sm:px-6 h-16 flex items-center justify-between gap-2">
+        <div className="max-w-6xl mx-auto px-6 h-16 flex items-center justify-between">
           {/* Brand Logo */}
-          <Link href="/" className="flex items-center gap-2.5 sm:gap-3 group shrink-0">
+          <Link href="/" className="flex items-center gap-3 group">
             <div className="size-8 rounded border border-zinc-700 bg-zinc-900 flex items-center justify-center shrink-0 group-hover:border-zinc-500 transition-colors">
               <ShieldAlert className="size-5 text-rose-500" />
             </div>
-            <div className="flex items-center gap-1.5 sm:gap-2">
-              <span className="font-mono text-xs sm:text-base font-bold tracking-wider text-zinc-100 uppercase">
+            <div className="flex items-center gap-2">
+              <span className="font-mono text-sm sm:text-base font-bold tracking-wider text-zinc-100 uppercase">
                 CANARYMESH
               </span>
               <Badge
                 variant="outline"
-                className="text-[9px] sm:text-[10px] font-mono border-zinc-700 text-zinc-400 bg-zinc-900 px-1 sm:px-1.5"
+                className="text-[10px] font-mono border-zinc-700 text-zinc-400 bg-zinc-900"
               >
                 v1.0
               </Badge>
@@ -163,25 +163,22 @@ export default function SOCDashboard() {
           </Link>
 
           {/* Right Controls - Clean Single Line Alignment */}
-          <div className="flex items-center gap-1.5 sm:gap-3 shrink-0">
+          <div className="flex items-center gap-3">
             {/* Live API Connection Status Badge */}
             {apiConnected === true ? (
-              <div className="flex items-center gap-1.5 px-2 sm:px-2.5 py-1 rounded border border-emerald-900/60 bg-emerald-950/20 text-emerald-400 text-[10px] sm:text-xs font-mono">
+              <div className="flex items-center gap-1.5 px-2.5 py-1 rounded border border-emerald-900/60 bg-emerald-950/20 text-emerald-400 text-xs font-mono">
                 <span className="size-1.5 rounded-full bg-emerald-500 animate-pulse" />
-                <span className="hidden sm:inline">API: </span>
-                <span>CONNECTED</span>
+                <span>API: CONNECTED</span>
               </div>
             ) : apiConnected === false ? (
-              <div className="flex items-center gap-1.5 px-2 sm:px-2.5 py-1 rounded border border-rose-900/60 bg-rose-950/20 text-rose-400 text-[10px] sm:text-xs font-mono">
+              <div className="flex items-center gap-1.5 px-2.5 py-1 rounded border border-rose-900/60 bg-rose-950/20 text-rose-400 text-xs font-mono">
                 <span className="size-1.5 rounded-full bg-rose-500 animate-pulse" />
-                <span className="hidden sm:inline">API: </span>
-                <span>OFFLINE</span>
+                <span>API: OFFLINE</span>
               </div>
             ) : (
-              <div className="flex items-center gap-1.5 px-2 sm:px-2.5 py-1 rounded border border-zinc-800 bg-zinc-900 text-zinc-400 text-[10px] sm:text-xs font-mono">
+              <div className="flex items-center gap-1.5 px-2.5 py-1 rounded border border-zinc-800 bg-zinc-900 text-zinc-400 text-xs font-mono">
                 <span className="size-1.5 rounded-full bg-zinc-500 animate-pulse" />
-                <span className="hidden sm:inline">API: </span>
-                <span>CONNECTING...</span>
+                <span>API: CONNECTING...</span>
               </div>
             )}
 
@@ -191,10 +188,10 @@ export default function SOCDashboard() {
               <Button
                 variant="outline"
                 size="sm"
-                className="border-zinc-800 bg-zinc-900 text-zinc-300 hover:text-zinc-100 hover:bg-zinc-800 text-xs font-mono gap-1 sm:gap-1.5 h-8 px-2 sm:px-3"
+                className="border-zinc-800 bg-zinc-900 text-zinc-300 hover:text-zinc-100 hover:bg-zinc-800 text-xs font-mono gap-1.5 h-8"
               >
                 <ArrowLeft className="size-3.5" />
-                <span className="hidden sm:inline">Overview</span>
+                <span>Overview</span>
               </Button>
             </Link>
           </div>
@@ -202,7 +199,7 @@ export default function SOCDashboard() {
       </header>
 
       {/* Main SOC Dashboard Area */}
-      <div className="max-w-6xl mx-auto px-4 sm:px-6 py-4 sm:py-6 space-y-4 sm:space-y-6 flex-1 w-full">
+      <div className="max-w-6xl mx-auto px-6 py-6 space-y-6 flex-1 w-full">
         {/* Telemetry KPIs */}
         <KpiCards telemetry={telemetry} loading={loading} />
 
