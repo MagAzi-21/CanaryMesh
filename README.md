@@ -9,7 +9,11 @@
 [![Next.js](https://img.shields.io/badge/Frontend-Next.js%2015-black.svg?style=flat&logo=next.js)](https://nextjs.org)
 [![shadcn/ui](https://img.shields.io/badge/UI-shadcn%2Fui-000000.svg?style=flat)](https://ui.shadcn.com)
 [![Tailwind CSS](https://img.shields.io/badge/Style-Tailwind_CSS-38B2AC.svg?style=flat&logo=tailwind-css)](https://tailwindcss.com)
+[![Vercel](https://img.shields.io/badge/Vercel-Live_Deployment-black.svg?style=flat&logo=vercel)](https://frontend-zeta-amber.vercel.app)
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
+
+> **Live Production Landing Page:** [https://frontend-zeta-amber.vercel.app](https://frontend-zeta-amber.vercel.app)  
+> **Live SOC Console:** [https://frontend-zeta-amber.vercel.app/dashboard](https://frontend-zeta-amber.vercel.app/dashboard)
 
 ---
 
