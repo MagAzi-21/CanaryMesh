@@ -87,10 +87,11 @@ export function TokenDialog({ tokens, onTokenCreated }: TokenDialogProps) {
       <Button
         size="sm"
         onClick={() => setOpen(true)}
-        className="bg-zinc-100 text-zinc-950 hover:bg-zinc-200 text-xs font-mono font-medium gap-1.5 shadow"
+        className="bg-zinc-100 text-zinc-950 hover:bg-zinc-200 text-xs font-mono font-medium gap-1 sm:gap-1.5 shadow h-8 px-2 sm:px-3"
       >
         <Plus className="size-3.5" />
-        Deploy Honey-Token
+        <span className="hidden sm:inline">Deploy Honey-Token</span>
+        <span className="sm:hidden">Deploy</span>
       </Button>
 
       <DialogContent className="sm:max-w-2xl w-full max-h-[85vh] flex flex-col overflow-hidden bg-zinc-950 border border-zinc-800 text-zinc-100 p-6">

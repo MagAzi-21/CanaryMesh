@@ -18,6 +18,13 @@
 - **Backend / Telegram / CLI Status Markers:** Use crisp bracketed SOC tags (`[CRITICAL]`, `[HIGH]`, `[MEDIUM]`, `[ACTIVE_QUARANTINE]`, `[MONITORED]`, `[ALERT]`, `[OK]`, `[BLOCKED]`) instead of emojis.
 - **Simulation:** Standalone Python script (`simulate_attack.py`) using `httpx` / `requests` to trigger realistic intrusion scenarios on demand with bracketed tags and ANSI colors only.
 
+## STRICT SECRET HYGIENE & ANTI-LEAK GUARDRAIL (PERMANENT RULE)
+- **NEVER** write real API keys, Telegram bot tokens, chat IDs, database credentials, or private keys into `.env.example`, `README.md`, `.md` documentation, frontend files, or Python source files.
+- **`.env.example`** must ONLY contain generic, safe placeholders (`TELEGRAM_BOT_TOKEN=your_telegram_bot_token_here`, `TELEGRAM_CHAT_ID=your_chat_id_here`).
+- **`.gitignore` Enforcement:** Root and backend `.gitignore` files MUST strictly exclude `.env`, `.env.*`, `backend/.env`, `frontend/.env.local`, `*.db`, `*.sqlite3`, and `*.key`.
+- **Pre-Commit Hook:** `.git/hooks/pre-commit` MUST remain installed to actively block any staged Telegram bot tokens (`[0-9]{8,10}:[A-Za-z0-9_-]{35}`), non-placeholder `TELEGRAM_BOT_TOKEN=` strings, or staged `.env` files.
+- **Local Credentials:** Real keys and tokens must reside strictly in local, untracked `backend/.env` on developer workstations and never be committed to Git.
+
 ## Directory Structure
 ```text
 canarymesh/
@@ -27,7 +34,7 @@ canarymesh/
 ├── README.md               # Public GitHub documentation & portal text
 ├── backend/
 │   ├── requirements.txt    # fastapi, uvicorn, httpx, pydantic, python-dotenv
-│   ├── .env.example        # TELEGRAM_BOT_TOKEN, TELEGRAM_CHAT_ID, AUTO_BAN_THRESHOLD
+│   ├── .env.example        # Safe placeholders ONLY
 │   └── app/
 │       ├── __init__.py
 │       ├── main.py         # FastAPI app, CORS, IP quarantine middleware, routes
@@ -41,11 +48,14 @@ canarymesh/
 │   ├── src/
 │   │   ├── app/
 │   │   │   ├── layout.tsx
-│   │   │   └── page.tsx    # Main SOC Dashboard (polling FastAPI every 2s)
+│   │   │   ├── page.tsx    # High-Contrast Enterprise Landing Page (/)
+│   │   │   └── dashboard/
+│   │   │       └── page.tsx# Main SOC Command Center (/dashboard, polling FastAPI every 2s)
 │   │   └── components/
 │   │       ├── ui/         # Official shadcn/ui primitives ONLY
 │   │       ├── kpi-cards.tsx
 │   │       ├── incident-feed.tsx
+│   │       ├── forensic-sheet.tsx
 │   │       ├── token-dialog.tsx
 │   │       └── quarantine-table.tsx
 └── simulate_attack.py      # CLI demo script simulating 4 distinct attacker behaviors

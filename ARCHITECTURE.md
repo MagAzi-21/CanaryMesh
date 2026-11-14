@@ -126,12 +126,16 @@ CREATE TABLE IF NOT EXISTS quarantined_ips (
 
 ## 4. Frontend Architecture (`frontend/src/`)
 - Built on Next.js 15 (App Router), TypeScript, and Tailwind CSS.
+- **Route Layout:**
+  - `/` (`src/app/page.tsx`): High-Contrast Enterprise Landing Page (Problem vs. Solution, Tripwire Matrix, Kill-Chain, Live Terminal Simulation).
+  - `/dashboard` (`src/app/dashboard/page.tsx`): Standalone Operational SOC Command Center (Telemetry KPIs, Real-time feed, Forensic sheet, Quarantine manager).
 - **Exclusively `shadcn/ui` components**:
-  - `Card`: KPI summary statistics.
+  - `Card`: KPI summary statistics, Tripwire cards, and comparison matrices.
   - `Table`: Real-time incident logs and quarantine management.
   - `Sheet`: Slide-over inspector for deep packet inspection.
   - `Dialog`: Dynamic honey-token creation modal.
   - `Badge`: Threat severity color-coding (`CRITICAL` in ruby-red, `HIGH` in amber, `MEDIUM` in blue).
   - `Sonner`: Non-intrusive live breach notifications on dashboard poll.
   - `Tabs`: Switching between Incident Stream, Quarantined IPs, and Honey-Tokens.
+
 

@@ -37,7 +37,8 @@ app.add_middleware(
         "http://localhost:3000",
         "http://127.0.0.1:3000",
         "http://localhost:8000",
-        "http://127.0.0.1:8000"
+        "http://127.0.0.1:8000",
+        "*"
     ],
     allow_credentials=True,
     allow_methods=["*"],
@@ -50,15 +51,27 @@ async def active_quarantine_middleware(request: Request, call_next):
     path = request.url.path
     client_ip = forensics.extract_client_ip(request)
 
-    # Exempt SOC API and documentation routes so SOC analysts can always manage the platform
-    if path.startswith("/api/soc") or path.startswith("/docs") or path.startswith("/openapi.json"):
+    # 1. ALWAYS exempt preflight CORS (OPTIONS) requests
+    if request.method == "OPTIONS":
         return await call_next(request)
 
-    # Check if client IP is currently quarantined
+    # 2. ALWAYS exempt SOC management, documentation, and OpenAPI routes
+    # Under no circumstances should SOC analysts or dashboard polling ever be locked out
+    if (
+        path.startswith("/api/soc")
+        or path.startswith("/docs")
+        or path.startswith("/openapi.json")
+        or path.startswith("/redoc")
+        or path == "/"
+        or path == "/favicon.ico"
+    ):
+        return await call_next(request)
+
+    # 3. Check if client IP is currently quarantined on trap/application routes
     if database.is_ip_quarantined(client_ip):
         database.increment_quarantine_hits(client_ip)
         logger.warning(f"[QUARANTINE ENFORCED] Blocked inbound request from quarantined IP: {client_ip} to {path}")
-        return JSONResponse(
+        response = JSONResponse(
             status_code=status.HTTP_403_FORBIDDEN,
             content={
                 "error": "Forbidden",
@@ -67,6 +80,13 @@ async def active_quarantine_middleware(request: Request, call_next):
                 "containment": "ACTIVE_FIREWALL_BLOCK"
             }
         )
+        origin = request.headers.get("origin")
+        if origin:
+            response.headers["Access-Control-Allow-Origin"] = origin
+            response.headers["Access-Control-Allow-Credentials"] = "true"
+        else:
+            response.headers["Access-Control-Allow-Origin"] = "*"
+        return response
 
     return await call_next(request)
 
@@ -283,6 +303,7 @@ async def trap_generic_catcher(token_uuid: str, request: Request, background_tas
 # --- SOC Command Center REST API ---
 
 @app.get("/api/soc/telemetry", response_model=models.TelemetryResponse)
+@app.get("/api/soc/stats", response_model=models.TelemetryResponse)
 def get_soc_telemetry():
     return database.get_telemetry()
 

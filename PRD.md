@@ -43,10 +43,17 @@
 ### F5: Real-Time Telegram SOC Alerting
 - Dispatches formatted Markdown incident cards via Telegram Bot API within $< 500\text{ms}$ of a breach, including Incident ID, Trap Name, Attacker IP, Attack Vector, User-Agent, and Auto-Ban status.
 
-### F6: Live SOC Command Center Dashboard
-- Real-time web dashboard (`http://localhost:3000`) featuring:
+### F6: Dual-Route Architecture & Enterprise UI
+- **Enterprise Landing Page (`http://localhost:3000/`):**
+  - High-contrast dark-mode presentation with sticky navigation, anchor sections (`#problem`, `#tripwires`, `#killchain`), and live simulated terminal preview.
+  - Comparative analysis: Passive vulnerability scanners vs. Active cyber-deception (0% false positives).
+  - 4-card Tripwire Matrix and 3-Step Active Kill-Chain overview.
+  - Clean project attribution in the footer.
+- **Operational SOC Command Center (`http://localhost:3000/dashboard`):**
+  - Standalone enterprise monitoring interface polling FastAPI every 2 seconds:
   - **Live Telemetry Counters:** Active Traps, Total Breaches Detected, Quarantined IPs, Blocked Follow-Up Requests.
   - **Real-Time Incident Feed:** Auto-refreshing stream with severity badges, expandable raw HTTP request inspector, and visual alert toast when a new breach occurs.
   - **Trap Management & Export:** Create new traps and copy ready-to-plant `.env` or `robots.txt` baits in one click.
   - **Quarantine Manager:** View banned IPs, blocked hit counts, and manually ban/unban IPs during incident triage.
+
 

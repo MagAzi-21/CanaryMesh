@@ -115,7 +115,8 @@ npm install
 # Start Next.js development server
 npm run dev
 ```
-> Open `http://localhost:3000` in your browser to view the real-time SOC Command Center.
+> Open `http://localhost:3000` to view the Enterprise Cyber Deception Landing Page.  
+> Open `http://localhost:3000/dashboard` to access the real-time SOC Command Center Console.
 
 ### 3. Run the Attack Simulation
 In a third terminal:

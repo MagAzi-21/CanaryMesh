@@ -99,7 +99,8 @@ export function QuarantineTable({
 
       {/* Table of Quarantined IPs with Mobile Horizontal Scroll */}
       <div className="rounded-md border border-zinc-800 bg-zinc-900/60 overflow-hidden w-full">
-        <Table className="min-w-[680px]">
+        <div className="overflow-x-auto w-full">
+          <Table className="min-w-[680px]">
           <TableHeader className="bg-zinc-900 border-b border-zinc-800">
             <TableRow className="border-zinc-800 hover:bg-transparent">
               <TableHead className="w-[160px] text-xs font-mono text-zinc-400">QUARANTINED IP</TableHead>
@@ -186,6 +187,7 @@ export function QuarantineTable({
             )}
           </TableBody>
         </Table>
+        </div>
       </div>
     </div>
   );

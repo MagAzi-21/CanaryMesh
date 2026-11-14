@@ -107,7 +107,8 @@ export function IncidentFeed({
 
       {/* Incident Table with Mobile Horizontal Scroll */}
       <div className="rounded-md border border-zinc-800 bg-zinc-900/60 overflow-hidden w-full">
-        <Table className="min-w-[680px]">
+        <div className="overflow-x-auto w-full">
+          <Table className="min-w-[680px]">
           <TableHeader className="bg-zinc-900 border-b border-zinc-800">
             <TableRow className="border-zinc-800 hover:bg-transparent">
               <TableHead className="w-[120px] text-xs font-mono text-zinc-400">ID / TIME</TableHead>
@@ -198,6 +199,7 @@ export function IncidentFeed({
             )}
           </TableBody>
         </Table>
+        </div>
       </div>
     </div>
   );
